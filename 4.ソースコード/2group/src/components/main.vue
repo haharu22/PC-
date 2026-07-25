@@ -20,35 +20,33 @@
 
         <div class="steps-container">
           <!-- STEP 1 -->
-          <div class="step-card" :class="{ active: currentStep === 1 }" @click="scrollToStep(1)">
+          <div class="step-card" :class="{ active: currentStep === 1 }" @click="scroll(1)">
             <div class="step-label">STEP1:</div>
-            <div class="step-title">ショートカットキー</div>
+            <div class="step-title">キーボード操作</div>
           </div>
 
           <!-- STEP 2 -->
-          <div class="step-card" :class="{ active: currentStep === 2 }" @click="scrollToStep(2)">
+          <div class="step-card" :class="{ active: currentStep === 2 }" @click="scroll(2)">
             <div class="step-label">STEP2:</div>
-            <div class="step-title">ファイル＆画面管理</div>
+            <div class="step-title">ショートカットキー</div>
           </div>
 
           <!-- STEP 3 -->
-          <div class="step-card" :class="{ active: currentStep === 3 }" @click="scrollToStep(3)">
+          <div class="step-card" :class="{ active: currentStep === 3 }" @click="scroll(3)">
             <div class="step-label">STEP3:</div>
-            <div class="step-title">トラブル＆効率化</div>
+            <div class="step-title">ファイル・フォルダ管理</div>
           </div>
 
           <!-- STEP 4 -->
-          <div class="step-card" :class="{ active: currentStep === 4 }" @click="scrollToStep(4)">
+          <div class="step-card" :class="{ active: currentStep === 4 }" @click="scroll(4)">
             <div class="step-label">STEP4:</div>
-            <div class="step-title">実戦！スクショ活用</div>
+            <div class="step-title">トラブル対処</div>
           </div>
         </div>
 
         <!-- 戻るボタン -->
         <div class="back-button-container">
-          <button class="back-btn">
-            <i class="fa-solid fa-arrow-left"></i>
-          </button>
+          <button class="back-btn">←</button>
         </div>
       </aside>
 
@@ -60,7 +58,7 @@
             <div class="play-icon"></div>
           </div>
           <div class="video-info">
-            <div class="video-title">STEP1：ショートカットキー</div>
+            <div class="video-title">STEP1：キーボード操作</div>
           </div>
         </div>
 
@@ -70,7 +68,7 @@
             <div class="play-icon"></div>
           </div>
           <div class="video-info">
-            <div class="video-title">STEP2：ファイル管理 (Alt + Tab)</div>
+            <div class="video-title">STEP2：ショートカットキー</div>
           </div>
         </div>
 
@@ -80,7 +78,7 @@
             <div class="play-icon"></div>
           </div>
           <div class="video-info">
-            <div class="video-title">STEP3：全選択と上書き保存 (Ctrl + A / S)</div>
+            <div class="video-title">STEP3：ファイル・フォルダ管理</div>
           </div>
         </div>
 
@@ -90,7 +88,7 @@
             <div class="play-icon"></div>
           </div>
           <div class="video-info">
-            <div class="video-title">STEP4：範囲選択と連続コピー</div>
+            <div class="video-title">STEP4：トラブル対処</div>
           </div>
         </div>
       </section>
@@ -108,7 +106,7 @@ export default {
   },
   methods: {
     // スクロール
-    scrollToStep(stepNumber) {
+    scroll(stepNumber) {
       this.currentStep = stepNumber;
       const targetElement = this.$refs[`step${stepNumber}`];
 
