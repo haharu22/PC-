@@ -1,169 +1,323 @@
 <template>
-  <!-- 1. 画面一番上の検索バー -->
-  <header class="header">
-    <div class="search-container">
-      <!-- v-modelで入力された文字を「searchQuery」と連動させます -->
-      <input 
-        type="text" 
-        class="search-input" 
-        placeholder="動画を検索..." 
-        v-model="searchQuery"
-      >
-      <button class="search-button">検索</button>
-    </div>
-  </header>
+  <div class="page-bg">
+    <!-- トップページタイトル（デザイン案のヘッダー上ラベル） -->
+    <div class="design-label">トップページ画面</div>
 
-  <!-- 2. 動画風カードが並ぶエリア -->
-  <main class="container">
-    <div class="video-grid">
+    <!-- 1. ヘッダーエリア -->
+    <header class="header-bar">
+      <!-- 左：ハンバーガーメニュー -->
+      <button class="icon-btn menu-btn" aria-label="メニュー">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
 
-      <!-- v-forを使って、絞り込まれた動画データを自動ループ出力します -->
-      <div 
-        class="video-card" 
-        v-for="video in filteredVideos" 
-        :key="video.id"
-      >
-        <div class="thumbnail">
-        <img src="/images/play-button.png" alt="再生" class="play-image">
+      <!-- 中央：検索入力バー -->
+      <div class="search-box">
+        <div class="search-icon-circle">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
         </div>
-        <div class="video-info">
-          <h3 class="video-title">{{ video.title }}</h3>
-          <p class="video-author">{{ video.author }}</p>
+        <input 
+          type="text" 
+          class="search-input" 
+          placeholder="入力してください" 
+          v-model="searchQuery"
+        />
+      </div>
+
+      <!-- 右：アクションエリア（お問い合わせ ＋ 通知ベル） -->
+      <div class="header-actions">
+        <!-- 追加: お問い合わせボタン -->
+        <button class="contact-btn" @click="goToContact" aria-label="お問い合わせ">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+            <polyline points="22,6 12,13 2,6"></polyline>
+          </svg>
+          <span class="contact-text">お問い合わせ</span>
+        </button>
+
+        <!-- 通知ベルアイコン -->
+        <button class="icon-btn bell-btn" aria-label="通知">
+          <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- 2. メインコンテンツエリア -->
+    <main class="content-container">
+      <h2 class="section-title">配信済み</h2>
+
+      <!-- 動画カード一覧 -->
+      <div class="card-grid">
+        <div 
+          v-for="item in filteredContents" 
+          :key="item.id" 
+          class="content-card"
+          :style="{ backgroundColor: item.color }"
+        >
+          <span class="card-text">{{ item.title }}</span>
         </div>
       </div>
 
-      <!-- 検索結果がゼロ件だった場合のメッセージ -->
-      <p v-if="filteredVideos.length === 0" class="no-result">
-        見つかりませんでした。
+      <!-- 検索結果がヒットしなかった場合 -->
+      <p v-if="filteredContents.length === 0" class="no-result">
+        該当するコンテンツが見つかりませんでした。
       </p>
-
-    </div>
-  </main>
+    </main>
+  </div>
 </template>
 
 <script setup>
 import { ref, computed } from 'vue'
 
-// 検索窓の文字を管理する状態（データ）
+// Vue Routerを使う場合は以下を有効化してください
+// import { useRouter } from 'vue-router'
+// const router = useRouter()
+
+// 検索入力の状態
 const searchQuery = ref('')
 
-// 動画のデータを1つのリスト（配列）にまとめました
-const videos = ref([
-  { id: 1, title: 'PCの基本的な使い方 1', author: 'チャンネル名 A' },
-  { id: 2, title: 'Zoomの使い方', author: 'チャンネル名 B' },
-  { id: 3, title: 'ショートカットキー講座', author: 'チャンネル名 C' },
-  { id: 4, title: 'ファイルの操作', author: 'チャンネル名 D' }
+// 画像のデザインに合わせたデータ定義（タイトル ＋ 背景カラー）
+const contents = ref([
+  { 
+    id: 1, 
+    title: 'PCの基本的な使い方', 
+    color: '#6fd3db' // 水色
+  },
+  { 
+    id: 2, 
+    title: 'ZOOMの使い方', 
+    color: '#76dca9' // エメラルドグリーン
+  },
+  { 
+    id: 3, 
+    title: 'ショートカットキー講座', 
+    color: '#9fa3f8' // ラベンダーブルー
+  },
+  { 
+    id: 4, 
+    title: 'ファイルの操作', 
+    color: '#f5fa93' // パステルイエロー
+  }
 ])
 
-// 検索文字に合わせて、動画を自動で絞り込む仕組み（算出プロパティ）
-const filteredVideos = computed(() => {
-  return videos.value.filter(video => {
-    return video.title.toLowerCase().includes(searchQuery.value.toLowerCase())
-  })
+// 検索キーワードでリアルタイムにフィルタリング
+const filteredContents = computed(() => {
+  if (!searchQuery.value.trim()) {
+    return contents.value
+  }
+  return contents.value.filter(item => 
+    item.title.toLowerCase().includes(searchQuery.value.toLowerCase())
+  )
 })
+
+// お問い合わせ画面へ遷移する関数
+const goToContact = () => {
+  // Vue Routerを使用している場合:
+  // router.push('/contact')
+  
+  // 例: 別URLや標準のページ遷移の場合:
+  // window.location.href = '/contact'
+
+  alert('お問い合わせ画面へ遷移します')
+}
 </script>
 
 <style scoped>
-/* style.css の中身をそのまま移植しました */
-* {
+/* 全体のスタイル・リセット */
+.page-bg {
+  min-height: 100vh;
+  background-color: #f7f8f9;
+  font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+  padding: 20px;
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
 }
 
-.header {
-  background-color: rgba(255, 255, 255, 0.95);
-  padding: 16px 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-
-.search-container {
-  width: 90%;
-  max-width: 1000px;
-  margin: 0 auto;
-  display: flex;
-  gap: 8px;
-}
-
-.search-input {
-  flex: 1;
-  padding: 12px 20px;
-  font-size: 16px;
-  border: 2px solid #38bdf8;
-  border-radius: 24px;
-  outline: none;
-}
-
-.search-button {
-  padding: 12px 24px;
-  font-size: 15px;
-  background-color: #0284c7;
-  color: white;
-  border: none;
-  border-radius: 24px;
-  cursor: pointer;
+/* 画面左上のラベル */
+.design-label {
+  font-size: 14px;
+  color: #a0a0a0;
+  margin-bottom: 10px;
   font-weight: bold;
 }
 
-.container {
-  max-width: 1000px;
-  margin: 30px auto;
-  padding: 0 20px;
-}
-
-.video-grid {
+/* 1. ヘッダーバー */
+.header-bar {
+  background-color: #61cddb;
+  border-radius: 16px;
+  padding: 12px 20px;
   display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
-  justify-content: center;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
-.video-card {
-  width: 180px;         
-  background-color: white;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+.icon-btn {
+  background: none;
+  border: none;
+  color: #333;
   cursor: pointer;
-}
-
-.thumbnail {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  background: linear-gradient(135deg, #7dd3fc, #38bdf8);
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 4px;
+  transition: opacity 0.2s;
 }
 
-.play-image {
-  width: 30px;
-  height: auto;
+.icon-btn:hover {
+  opacity: 0.7;
 }
 
-.video-info {
-  padding: 8px;
+/* 検索バー */
+.search-box {
+  flex: 1;
+  max-width: 650px;
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
-.video-title {
-  font-size: 12px;
+.search-icon-circle {
+  position: absolute;
+  left: 6px;
+  width: 34px;
+  height: 34px;
+  background-color: #a0d8df;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #333;
+}
+
+.search-input {
+  width: 100%;
+  height: 42px;
+  border-radius: 21px;
+  border: none;
+  padding: 0 20px 0 48px;
+  font-size: 15px;
+  text-align: center;
+  outline: none;
+  color: #333;
+}
+
+.search-input::placeholder {
+  color: #999;
+}
+
+/* 右側アクションエリア */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* お問い合わせボタン */
+.contact-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #ffffff;
+  color: #333333;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 14px;
+  font-size: 13px;
   font-weight: bold;
-  margin-bottom: 4px;
-  color: #333; /* 元のCSSから文字色を補正 */
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  transition: all 0.2s ease;
+  white-space: nowrap;
 }
 
-.video-author {
-  font-size: 10px;
-  color: #666;
+.contact-btn:hover {
+  background-color: #f0f0f0;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
 }
 
-/* 検索結果がゼロの時のテキスト装飾（追加分） */
+/* 2. メインコンテンツエリア */
+.content-container {
+  max-width: 900px;
+  margin: 40px auto 0;
+  padding: 0 10px;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #111;
+  margin-bottom: 24px;
+}
+
+/* 2x2 のカードグリッド */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+}
+
+/* カード共通スタイル */
+.content-card {
+  height: 160px;
+  border-radius: 16px;
+  border: 2.5px solid #5d5d5d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.content-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.card-text {
+  font-size: 18px;
+  font-weight: 800;
+  color: #000;
+  text-align: center;
+  line-height: 1.4;
+}
+
 .no-result {
+  text-align: center;
   color: #666;
-  font-size: 14px;
-  margin-top: 20px;
+  margin-top: 40px;
+  font-size: 15px;
+}
+
+/* スマホ表示対応 */
+@media (max-width: 600px) {
+  .card-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .content-card {
+    height: 130px;
+  }
+  
+  /* スマホ等で画面が狭いときは文字を隠して丸型アイコンボタンに */
+  .contact-text {
+    display: none;
+  }
+  .contact-btn {
+    padding: 8px;
+    border-radius: 50%;
+  }
 }
 </style>
