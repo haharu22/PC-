@@ -1,16 +1,17 @@
 <template>
-  <div class="app-container">
-    <!-- ヘッダー -->
-    <header class="header">
-      <i class="fa-solid fa-bars menu-icon"></i>
-      <div class="search-bar-container">
-        <div class="search-icon-btn">
-          <i class="fa-solid fa-magnifying-glass"></i>
-        </div>
-        <input type="text" class="search-input" placeholder="例: ショートカット、スクショなど" />
-      </div>
-      <i class="fa-regular fa-bell bell-icon"></i>
-    </header>
+    <!-- 1. 画面一番上の検索バー -->
+  <header class="header">
+    <div class="search-container">
+      <!-- v-modelで入力された文字を「searchQuery」と連動させます -->
+      <input 
+        type="text" 
+        class="search-input" 
+        placeholder="動画を検索..." 
+        v-model="searchQuery"
+      >
+      <button class="search-button">検索</button>
+    </div>
+  </header>
 
     <!-- メインコンテンツ -->
     <main class="main-content">
