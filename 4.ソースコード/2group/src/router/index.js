@@ -1,11 +1,29 @@
-import { createRouter, createWebHistory } from 'vue-router';
-import MainView from '../components/main.vue';
+import { createRouter, createWebHistory } from "vue-router";
+import MainView from "../components/main.vue";
+import Login from "@/components/login.vue";
+import Register from "@/components/register.vue";
+import Forgot from "@/components/forgot.vue";
 
 const routes = [
   {
-    path: '/',
-    name: 'main',
-    component: MainView,
+    path: "/",
+    name: "login",
+    component: Login,
+  },
+  {
+    path: "/register",
+    name: "register",
+    component: Register, // 👈 新規登録画面を追加！
+  },
+  {
+    path: "/forgot",
+    name: "forgot",
+    component: Forgot, // 👈 パスワード再設定画面を追加！
+  },
+  {
+    path: "/top",
+    name: "top",
+    component: MainView, // 👈 ログイン後のトップページを追加！
   },
 ];
 
