@@ -13,17 +13,17 @@ const routes = [
   {
     path: "/register",
     name: "register",
-    component: Register, // 👈 新規登録画面を追加！
+    component: Register,
   },
   {
     path: "/forgot",
     name: "forgot",
-    component: Forgot, // 👈 パスワード再設定画面を追加！
+    component: Forgot,
   },
   {
     path: "/top",
     name: "top",
-    component: MainView, // 👈 ログイン後のトップページを追加！
+    component: MainView,
   },
 ];
 

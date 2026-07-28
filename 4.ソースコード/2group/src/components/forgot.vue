@@ -11,7 +11,7 @@
 
       <br /><br />
 
-      <router-link to="/login">ログイン画面へ戻る</router-link>
+      <router-link to="/">ログイン画面へ戻る</router-link>
     </div>
   </div>
 </template>
@@ -31,7 +31,7 @@ export default {
       }
 
       alert("パスワード再設定用のメールを送信しました。（デモ）");
-      this.$router.push("/login");
+      this.$router.push("/");
     },
   },
 };

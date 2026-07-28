@@ -12,7 +12,7 @@
 
       <br /><br />
 
-      <router-link to="/login">ログイン画面へ戻る</router-link>
+      <router-link to="/">ログイン画面へ戻る</router-link>
     </div>
   </div>
 </template>
@@ -22,7 +22,7 @@ export default {
   methods: {
     register() {
       alert("登録が完了しました！");
-      this.$router.push("/login");
+      this.$router.push("/");
     },
   },
 };
