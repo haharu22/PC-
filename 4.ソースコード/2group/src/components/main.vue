@@ -1,17 +1,14 @@
 <template>
+  <div class="app-container">
+    <!-- ヘッダー -->
     <!-- 1. 画面一番上の検索バー -->
-  <header class="header">
-    <div class="search-container">
-      <!-- v-modelで入力された文字を「searchQuery」と連動させます -->
-      <input 
-        type="text" 
-        class="search-input" 
-        placeholder="動画を検索..." 
-        v-model="searchQuery"
-      >
-      <button class="search-button">検索</button>
-    </div>
-  </header>
+    <header class="header">
+      <div class="search-container">
+        <!-- v-modelで入力された文字を「searchQuery」と連動させます -->
+        <input type="text" class="search-input" placeholder="動画を検索..." v-model="searchQuery" />
+        <button class="search-button">検索</button>
+      </div>
+    </header>
 
     <!-- メインコンテンツ -->
     <main class="main-content">
