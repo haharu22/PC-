@@ -1,0 +1,113 @@
+/* 全体初期化 */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* 背景色（水色） */
+body {
+  font-family: sans-serif;
+  background-color: #e0f2fe;
+  padding-bottom: 40px;
+}
+
+/* ==============================================
+   1. 上部の検索バーエリア（幅を大きく設定）
+   ============================================== */
+.header {
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 16px 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.search-container {
+  /* 画面幅に合わせてしっかり長く（最大1000px）指定 */
+  width: 90%;
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  gap: 8px;
+}
+
+.search-input {
+  flex: 1;
+  padding: 12px 20px;
+  font-size: 16px;
+  border: 2px solid #38bdf8;
+  border-radius: 24px;
+  outline: none;
+}
+
+.search-button {
+  padding: 12px 24px;
+  font-size: 15px;
+  background-color: #0284c7;
+  color: white;
+  border: none;
+  border-radius: 24px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* ==============================================
+   2. 動画風カードエリア（1つの大きさを小さく設定）
+   ============================================== */
+.container {
+  max-width: 1000px;
+  margin: 30px auto;
+  padding: 0 20px;
+}
+
+/* カードを並べるエリア */
+.video-grid {
+  display: flex;
+  flex-wrap: wrap;       /* 端までいったら折り返す */
+  gap: 15px;            /* カード同士の間隔 */
+  justify-content: center;
+}
+
+/* ひとつひとつの「動画風画像カード」のサイズ */
+.video-card {
+  width: 180px;         /* 👈 ここで動画画像の横幅を小さく固定（お好みで150px等に調整可能） */
+  background-color: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+/* 動画風サムネイル（四角い部分） */
+.thumbnail {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: linear-gradient(135deg, #7dd3fc, #38bdf8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 再生アイコン画像 */
+.play-image {
+  width: 30px;
+  height: auto;
+}
+
+/* テキスト情報 */
+.video-info {
+  padding: 8px;
+}
+
+.video-title {
+  font-size: 12px;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.video-author {
+  font-size: 10px;
+  color: #666;
+}
