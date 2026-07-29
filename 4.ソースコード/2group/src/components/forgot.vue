@@ -29,8 +29,6 @@ export default {
         alert("メールアドレスを入力してください。");
         return;
       }
-
-      alert("パスワード再設定用のメールを送信しました。（デモ）");
       this.$router.push("/");
     },
   },

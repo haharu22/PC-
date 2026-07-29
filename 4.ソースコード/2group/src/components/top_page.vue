@@ -7,7 +7,17 @@
     <header class="header-bar">
       <!-- 左：ハンバーガーメニュー -->
       <button class="icon-btn menu-btn" aria-label="メニュー">
-        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="28"
+          height="28"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
           <line x1="3" y1="6" x2="21" y2="6"></line>
           <line x1="3" y1="12" x2="21" y2="12"></line>
           <line x1="3" y1="18" x2="21" y2="18"></line>
@@ -17,15 +27,25 @@
       <!-- 中央：検索入力バー -->
       <div class="search-box">
         <div class="search-icon-circle">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
             <circle cx="11" cy="11" r="8"></circle>
             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
           </svg>
         </div>
-        <input 
-          type="text" 
-          class="search-input" 
-          placeholder="入力してください" 
+        <input
+          type="text"
+          class="search-input"
+          placeholder="入力してください"
           v-model="searchQuery"
         />
       </div>
@@ -33,9 +53,25 @@
       <!-- 右：アクションエリア（お問い合わせ ＋ 通知ベル） -->
       <div class="header-actions">
         <!-- 追加: お問い合わせボタン -->
-        <button class="contact-btn" @click="goToContact" aria-label="お問い合わせ">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+        <button
+          class="contact-btn"
+          @click="goToContact"
+          aria-label="お問い合わせ"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path
+              d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+            ></path>
             <polyline points="22,6 12,13 2,6"></polyline>
           </svg>
           <span class="contact-text">お問い合わせ</span>
@@ -43,7 +79,18 @@
 
         <!-- 通知ベルアイコン -->
         <button class="icon-btn bell-btn" aria-label="通知">
-          <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <!--newsできたら@click="goToNews"追加-->
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="26"
+            height="26"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
             <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
             <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
           </svg>
@@ -57,11 +104,12 @@
 
       <!-- 動画カード一覧 -->
       <div class="card-grid">
-        <div 
-          v-for="item in filteredContents" 
-          :key="item.id" 
+        <div
+          v-for="item in filteredContents"
+          :key="item.id"
           class="content-card"
           :style="{ backgroundColor: item.color }"
+          @click="goToMain(item)"
         >
           <span class="card-text">{{ item.title }}</span>
         </div>
@@ -76,59 +124,62 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed } from "vue";
+import { useRouter } from "vue-router";
 
-// Vue Routerを使う場合は以下を有効化してください
-// import { useRouter } from 'vue-router'
-// const router = useRouter()
+const router = useRouter();
 
 // 検索入力の状態
-const searchQuery = ref('')
+const searchQuery = ref("");
 
 // 画像のデザインに合わせたデータ定義（タイトル ＋ 背景カラー）
 const contents = ref([
-  { 
-    id: 1, 
-    title: 'PCの基本的な使い方', 
-    color: '#6fd3db' // 水色
+  {
+    id: 1,
+    title: "PCの基本的な使い方",
+    color: "#6fd3db", // 水色
   },
-  { 
-    id: 2, 
-    title: 'ZOOMの使い方', 
-    color: '#76dca9' // エメラルドグリーン
+  {
+    id: 2,
+    title: "ZOOMの使い方",
+    color: "#76dca9", // エメラルドグリーン
   },
-  { 
-    id: 3, 
-    title: 'ショートカットキー講座', 
-    color: '#9fa3f8' // ラベンダーブルー
+  {
+    id: 3,
+    title: "ショートカットキー講座",
+    color: "#9fa3f8", // ラベンダーブルー
   },
-  { 
-    id: 4, 
-    title: 'ファイルの操作', 
-    color: '#f5fa93' // パステルイエロー
-  }
-])
+  {
+    id: 4,
+    title: "ファイルの操作",
+    color: "#f5fa93", // パステルイエロー
+  },
+]);
 
 // 検索キーワードでリアルタイムにフィルタリング
 const filteredContents = computed(() => {
   if (!searchQuery.value.trim()) {
-    return contents.value
+    return contents.value;
   }
-  return contents.value.filter(item => 
-    item.title.toLowerCase().includes(searchQuery.value.toLowerCase())
-  )
-})
+  return contents.value.filter((item) =>
+    item.title.toLowerCase().includes(searchQuery.value.toLowerCase()),
+  );
+});
 
 // お問い合わせ画面へ遷移する関数
 const goToContact = () => {
-  // Vue Routerを使用している場合:
-  // router.push('/contact')
-  
-  // 例: 別URLや標準のページ遷移の場合:
-  // window.location.href = '/contact'
+  router.push("/inquiry");
+};
 
-  alert('お問い合わせ画面へ遷移します')
-}
+const goToMain = (item) => {
+  router.push("/main");
+};
+
+/*Newsできたらこれ追加
+const goToNews = () => {
+  router.push("/news");
+};
+*/
 </script>
 
 <style scoped>
@@ -136,7 +187,9 @@ const goToContact = () => {
 .page-bg {
   min-height: 100vh;
   background-color: #f7f8f9;
-  font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+  font-family:
+    "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans",
+    Meiryo, sans-serif;
   padding: 20px;
   box-sizing: border-box;
 }
@@ -278,7 +331,9 @@ const goToContact = () => {
   padding: 20px;
   box-sizing: border-box;
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
 }
 
 .content-card:hover {
@@ -310,7 +365,7 @@ const goToContact = () => {
   .content-card {
     height: 130px;
   }
-  
+
   /* スマホ等で画面が狭いときは文字を隠して丸型アイコンボタンに */
   .contact-text {
     display: none;

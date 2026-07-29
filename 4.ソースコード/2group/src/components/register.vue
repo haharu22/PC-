@@ -21,7 +21,6 @@
 export default {
   methods: {
     register() {
-      alert("登録が完了しました！");
       this.$router.push("/");
     },
   },

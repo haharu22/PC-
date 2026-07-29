@@ -95,7 +95,7 @@
         </p>
 
         <!--トップページに戻るボタン-->
-        <a href="top_page.vue" class="top-btn">トップページに戻る</a>
+        <router-link to="/top" class="top-btn">トップページに戻る</router-link>
       </div>
     </div>
   </div>

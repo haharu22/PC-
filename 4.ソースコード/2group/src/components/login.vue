@@ -36,77 +36,75 @@
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        email: "",
-        password: "",
-      };
+export default {
+  data() {
+    return {
+      email: "",
+      password: "",
+    };
+  },
+  methods: {
+    handleLogin() {
+      if (this.email === "" || this.password === "") {
+        alert("メールアドレスとパスワードを入力してください。");
+      } else {
+        this.$router.push("/top"); // ※ルーターで設定しているトップページのパスに変えてね
+      }
     },
-    methods: {
-      handleLogin() {
-        if (this.email === "" || this.password === "") {
-          alert("メールアドレスとパスワードを入力してください。");
-        } else {
-          alert("ログイン成功！（デモ画面）");
-          // Vue Routerでの画面遷移コマンド！
-          this.$router.push("/top"); // ※ルーターで設定しているトップページのパスに変えてね
-        }
-      },
-    },
-  };
+  },
+};
 </script>
 
 <style scoped>
-  .login-page {
-    text-align: center;
-  }
+.login-page {
+  text-align: center;
+}
 
-  .container {
-    width: 350px;
-    margin: 80px auto;
-    background: white;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-  }
+.container {
+  width: 350px;
+  margin: 80px auto;
+  background: white;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
 
-  input {
-    width: 90%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
+input {
+  width: 90%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
 
-  button {
-    width: 95%;
-    padding: 10px;
-    background: #80d8e1;
-    color: #333;
-    font-weight: bold;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: 0.2s;
-  }
+button {
+  width: 95%;
+  padding: 10px;
+  background: #80d8e1;
+  color: #333;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.2s;
+}
 
-  button:hover {
-    background: #6bc7d0;
-  }
+button:hover {
+  background: #6bc7d0;
+}
 
-  a {
-    color: #4a9da6;
-    text-decoration: none;
-  }
+a {
+  color: #4a9da6;
+  text-decoration: none;
+}
 
-  a:hover {
-    text-decoration: underline;
-  }
+a:hover {
+  text-decoration: underline;
+}
 
-  .links {
-    margin-top: 15px;
-    display: flex;
-    justify-content: space-between;
-  }
+.links {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+}
 </style>

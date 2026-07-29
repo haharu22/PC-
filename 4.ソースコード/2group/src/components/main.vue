@@ -5,7 +5,12 @@
     <header class="header">
       <div class="search-container">
         <!-- v-modelで入力された文字を「searchQuery」と連動させます -->
-        <input type="text" class="search-input" placeholder="動画を検索..." v-model="searchQuery" />
+        <input
+          type="text"
+          class="search-input"
+          placeholder="動画を検索..."
+          v-model="searchQuery"
+        />
         <button class="search-button">検索</button>
       </div>
     </header>
@@ -18,25 +23,41 @@
 
         <div class="steps-container">
           <!-- STEP 1 -->
-          <div class="step-card" :class="{ active: currentStep === 1 }" @click="scroll(1)">
+          <div
+            class="step-card"
+            :class="{ active: currentStep === 1 }"
+            @click="scroll(1)"
+          >
             <div class="step-label">STEP1:</div>
             <div class="step-title">キーボード操作</div>
           </div>
 
           <!-- STEP 2 -->
-          <div class="step-card" :class="{ active: currentStep === 2 }" @click="scroll(2)">
+          <div
+            class="step-card"
+            :class="{ active: currentStep === 2 }"
+            @click="scroll(2)"
+          >
             <div class="step-label">STEP2:</div>
             <div class="step-title">ショートカットキー</div>
           </div>
 
           <!-- STEP 3 -->
-          <div class="step-card" :class="{ active: currentStep === 3 }" @click="scroll(3)">
+          <div
+            class="step-card"
+            :class="{ active: currentStep === 3 }"
+            @click="scroll(3)"
+          >
             <div class="step-label">STEP3:</div>
             <div class="step-title">ファイル・フォルダ管理</div>
           </div>
 
           <!-- STEP 4 -->
-          <div class="step-card" :class="{ active: currentStep === 4 }" @click="scroll(4)">
+          <div
+            class="step-card"
+            :class="{ active: currentStep === 4 }"
+            @click="scroll(4)"
+          >
             <div class="step-label">STEP4:</div>
             <div class="step-title">トラブル対処</div>
           </div>
@@ -44,7 +65,7 @@
 
         <!-- 戻るボタン -->
         <div class="back-button-container">
-          <button class="back-btn">←</button>
+          <button class="back-btn" @click="goToTop">←</button>
         </div>
       </aside>
 
@@ -96,13 +117,17 @@
 
 <script>
 export default {
-  name: 'MainView',
+  name: "MainView",
   data() {
     return {
       currentStep: 1, // 選択されているSTEPの番号
     };
   },
   methods: {
+    goToTop() {
+      this.$router.push("/top");
+    },
+
     // スクロール
     scroll(stepNumber) {
       this.currentStep = stepNumber;
@@ -110,8 +135,8 @@ export default {
 
       if (targetElement) {
         targetElement.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start',
+          behavior: "smooth",
+          block: "start",
         });
       }
     },
@@ -125,7 +150,7 @@ export default {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: 'Hiragino Sans', 'Meiryo', sans-serif;
+  font-family: "Hiragino Sans", "Meiryo", sans-serif;
 }
 
 /* アプリ全体コンテナ */
