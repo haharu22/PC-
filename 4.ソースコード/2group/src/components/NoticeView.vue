@@ -10,7 +10,7 @@
       </span>
     </div>
     <div class="button-area">
-      <button @click="goChat">AIサポートチャット</button>
+      <button @click="goChat">トップページに戻る</button>
     </div>
   </div>
 </template>
@@ -45,7 +45,7 @@ const notices = ref([
 const router = useRouter();
 
 const goChat = () => {
-  router.push("/chat");
+  router.push("/top");
 };
 </script>
 
