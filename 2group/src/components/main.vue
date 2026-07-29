@@ -44,7 +44,7 @@
 
         <!-- 戻るボタン -->
         <div class="back-button-container">
-          <button class="back-btn" @click="goBack">←</button>
+          <button class="back-btn">←</button>
         </div>
       </aside>
 
@@ -115,9 +115,6 @@ export default {
         });
       }
     },
-    goBack() {
-      this.$router.push('/top');
-    },
   },
 };
 </script>
@@ -157,31 +154,41 @@ export default {
   cursor: pointer;
 }
 
-.search-container {
+.search-bar-container {
   flex: 1;
   position: relative;
   display: flex;
   align-items: center;
 }
 
-.search-input {
-  flex: 1;
-  padding: 12px 20px;
-  font-size: 16px;
-  border: 2px solid #38bdf8;
-  border-radius: 24px;
-  outline: none;
+.search-icon-btn {
+  position: absolute;
+  left: 2px;
+  width: 38px;
+  height: 38px;
+  background-color: #a8e6ea;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #1a4f54;
+  font-size: 18px;
+  z-index: 1;
+  cursor: pointer;
 }
 
-.search-button {
-  padding: 12px 24px;
-  font-size: 15px;
-  background-color: #0284c7;
-  color: white;
+.search-input {
+  width: 100%;
+  height: 42px;
+  padding-left: 48px;
+  padding-right: 16px;
   border: none;
-  border-radius: 24px;
-  cursor: pointer;
-  font-weight: bold;
+  border-radius: 21px;
+  background-color: #ffffff;
+  font-size: 14px;
+  text-align: center;
+  color: #333;
+  outline: none;
 }
 
 .bell-icon {
