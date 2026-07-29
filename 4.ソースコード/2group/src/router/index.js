@@ -5,8 +5,8 @@ import Register from "@/components/register.vue";
 import Forgot from "@/components/forgot.vue";
 import TopPage from "@/components/top_page.vue";
 import Inquiry from "@/components/inquiry.vue";
-//import News from "@/components/news.vue";
-//import { N } from "vue-router/dist/index-BN0B0y8a.js";
+import NoticeView from "@/components/NoticeView.vue";
+import ChatView from "@/components/ChatView.vue";
 
 const routes = [
   {
@@ -39,13 +39,16 @@ const routes = [
     name: "main",
     component: MainView,
   },
-  /*
   {
-    path: "/news",
-    name: "news",
-    component: News,
+    path: "/notice",
+    name: "notice",
+    component: NoticeView,
   },
-  */
+  {
+    path: "/chat",
+    name: "chat",
+    component: ChatView,
+  },
 ];
 
 const router = createRouter({

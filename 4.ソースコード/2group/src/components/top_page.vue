@@ -78,8 +78,7 @@
         </button>
 
         <!-- 通知ベルアイコン -->
-        <button class="icon-btn bell-btn" aria-label="通知">
-          <!--newsできたら@click="goToNews"追加-->
+        <button class="icon-btn bell-btn" @click="goToNews" aria-label="通知">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="26"
@@ -175,11 +174,9 @@ const goToMain = (item) => {
   router.push("/main");
 };
 
-/*Newsできたらこれ追加
 const goToNews = () => {
-  router.push("/news");
+  router.push("/notice");
 };
-*/
 </script>
 
 <style scoped>
